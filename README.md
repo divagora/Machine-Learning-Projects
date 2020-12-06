@@ -1,6 +1,6 @@
 # Machine Learning Portfolio #
 
-This repository contains a collection of various machine learning projects.
+This repository contains a collection of various machine learning projects, completed alongside my PhD.
 
 
 ## Contents ##
