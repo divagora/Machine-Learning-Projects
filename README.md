@@ -18,3 +18,8 @@ This repository contains a collection of various machine learning projects, comp
 ### Dimensionality Reduction ###
 
 * [Principal Components Analysis](https://github.com/louissharrock/Machine-Learning-Projects/tree/main/Principal-Components-Analysis). This project investigates the use of dimensionality reduction via principal components analysis in the context of a classification algorithm for face recognition.
+
+
+### Deep Learning ###
+
+* [Artificial Neural Networks](https://github.com/louissharrock/Machine-Learning-Projects/tree/main/Artificial-Neural-Networks). This project investigates the use of an artificial neural network to predict stock market prices.
