@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Sat Dec 19 13:52:22 2020
+Created on Sat Dec 12 13:52:22 2020
 
 @author: ls616
 """
@@ -166,7 +166,7 @@ plt.legend(); plt.show()
 def extract_multi_day_out(df,pred_len):
     window_data_btc = []
     window_data_eth = []
-    for i in range(window_len,len(df)-pred_len):
+    for i in range(1,len(df)-pred_len):
         tmp_btc = df[i:(i+pred_len)]["btc_close"].copy()
         tmp_eth = df[i:(i+pred_len)]["eth_close"].copy()
         window_data_btc.append(tmp_btc)
@@ -276,7 +276,7 @@ plt.legend(); plt.show()
 def extract_multi_day_out(df,pred_len):
     window_data_btc = []
     window_data_eth = []
-    for i in range(window_len,len(df)-pred_len):
+    for i in range(1,len(df)-pred_len):
         tmp_btc = df[i:(i+pred_len)]["btc_close"].copy()
         tmp_eth = df[i:(i+pred_len)]["eth_close"].copy()
         window_data_btc.append(tmp_btc)
@@ -461,7 +461,7 @@ plot_acf(y_btc_test[1:] - y_btc_test.shift()[1:],lags=50)
 
 
 
-### ARIMA(5,1,0) model ###
+### ARIMA(2,1,0) model ###
 
 ## train data ##
 y_btc_train = train["btc_close"]
@@ -475,15 +475,17 @@ y_eth_test = test["eth_close"]
 y_hat_btc_test = np.zeros(len(y_btc_test))
 y_hat_eth_test = np.zeros(len(y_eth_test))
 
+pred_len = 1
+
 for i in range(0,len(y_btc_test)):
-    mod_btc = ARIMA(y_btc_train,order=(5,1,0))
-    mod_eth = ARIMA(y_eth_train,order=(5,1,0))
+    mod_btc = ARIMA(y_btc_train,order=(2,1,0))
+    mod_eth = ARIMA(y_eth_train,order=(2,1,0))
     
     mod_btc_fit = mod_btc.fit()
     mod_eth_fit = mod_eth.fit()
     
-    out_btc = mod_btc_fit.forecast()
-    out_eth = mod_eth_fit.forecast()
+    out_btc = mod_btc_fit.forecast(steps=pred_len)
+    out_eth = mod_eth_fit.forecast(steps=pred_len)
     
     pred_btc = out_btc[0]
     pred_eth = out_eth[0]
@@ -493,6 +495,7 @@ for i in range(0,len(y_btc_test)):
     
     y_btc_train = np.append(y_btc_train,y_btc_test[i])
     y_eth_train = np.append(y_eth_train,y_eth_test[i])
+
     
 y_hat_btc_test = pd.Series(y_hat_btc_test,index=y_btc_test.index)
 y_hat_eth_test = pd.Series(y_hat_eth_test,index=y_eth_test.index)
@@ -524,6 +527,61 @@ plt.legend(); plt.show()
 plt.plot(resid_eth_arima510,label="BTC")
 plt.ylabel("Residuals");plt.xlabel("Date")
 plt.legend(); plt.show()
+
+
+## 5-step targets ##
+pred_len = 5
+y_btc_test_multi, y_eth_test_multi = extract_multi_day_out(test,pred_len)
+
+## 5-step preds ##
+y_hat_btc_test_multi = np.zeros((y_btc_test_multi.shape[0],5))
+y_hat_eth_test_multi = np.zeros((y_eth_test_multi.shape[0],5))
+
+
+for i in range(y_btc_test_multi.shape[0]):
+    
+    y_btc_train = np.append(y_btc_train,y_btc_test[i])
+    y_eth_train = np.append(y_eth_train,y_eth_test[i])
+    
+    mod_btc = ARIMA(y_btc_train,order=(5,1,0))
+    mod_eth = ARIMA(y_eth_train,order=(5,1,0))
+    
+    mod_btc_fit = mod_btc.fit()
+    mod_eth_fit = mod_eth.fit()
+    
+    out_btc = mod_btc_fit.forecast(steps=pred_len)
+    out_eth = mod_eth_fit.forecast(steps=pred_len)
+    
+    pred_btc = np.array(out_btc)
+    pred_eth = np.array(out_eth)
+    
+    y_hat_btc_test_multi[i,] = pred_btc
+    y_hat_eth_test_multi[i,] = pred_eth
+    
+    
+## 5-step test errors (worse than rw!) ##
+mse_btc_arima510_test_multi = np.sqrt(mean_squared_error(y_btc_test_multi,y_hat_btc_test_multi))
+mse_eth_atima510_test_multi = np.sqrt(mean_squared_error(y_eth_test_multi,y_hat_eth_test_multi))
+    
+## 5- step predictions for plotting ##
+y_hat_btc_test_multi_plot = y_hat_btc_test_multi[::5].flatten()
+y_hat_btc_test_multi_plot = pd.Series(y_hat_btc_test_multi_plot,index=test[0:len(y_hat_btc_test_multi_plot)].index)
+
+y_hat_eth_test_multi_plot = y_hat_eth_test_multi[::5].flatten()
+y_hat_eth_test_multi_plot = pd.Series(y_hat_eth_test_multi_plot,index=test[0:len(y_hat_eth_test_multi_plot)].index)
+
+## 5-step plots (obviously not good!) ##
+plt.plot(y_btc_test,label="True")
+for i in range(int(len(y_hat_btc_test_multi_plot)/5)):
+    plt.plot(y_hat_btc_test_multi_plot[(5*i):(5*i+5)],label="Predictions")
+plt.ylabel("BTC (USD)"); plt.xlabel("Date")
+plt.show()
+
+plt.plot(y_eth_test,label="True")
+for i in range(int(len(y_hat_eth_test_multi_plot)/5)):
+    plt.plot(y_hat_eth_test_multi_plot[(5*i):(5*i+5)],label="Predictions")
+plt.ylabel("ETH (USD)"); plt.xlabel("Date")
+plt.show()
 
 ######################
 
@@ -836,3 +894,5 @@ plt.legend(); plt.show()
 
 
 ##################################
+
+
