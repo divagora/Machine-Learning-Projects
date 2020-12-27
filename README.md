@@ -22,7 +22,7 @@ This repository contains a collection of various machine learning projects compl
 
 ### Deep Learning ###
 
-* [Reucrrent Neural Networks](https://github.com/louissharrock/Machine-Learning-Projects/tree/main/Recurrent-Neural-Networks). This project investigates the use of recurrent neural networks (and artificial neural networks) to predict stock market prices.
+* [Reucrrent Neural Networks](https://github.com/louissharrock/Machine-Learning-Projects/tree/main/Recurrent-Neural-Networks). This project investigates the use of recurrent neural networks to predict stock market prices.
 * [Convolutional Neural Networks](https://github.com/louissharrock/Machine-Learning-Projects/tree/main/Convolutional-Neural-Networks). This project explores the use of a convolutional neural network to classify images. 
 * [Generative Adversarial Networks](https://github.com/louissharrock/Machine-Learning-Projects/tree/main/Generative-Adversarial-Networks). This project considers the use of a generatie adversarial network (GAN) to generate new images of faces. 
 
