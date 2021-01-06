@@ -29,4 +29,4 @@ This repository contains a collection of various machine learning projects compl
 
 ### Natural Language Processing ###
 
-* [Sentiment Analysis](https://github.com/louissharrock/Machine-Learning-Projects/tree/main/Sentiment-Analysis). This project applies three models - naive Bayes, logistic regression, and support vector machines (SVMs) - to perform sentiment analysis.
+* [Sentiment Analysis](https://github.com/louissharrock/Machine-Learning-Projects/tree/main/Sentiment-Analysis). This project applies several standard techniques (including naive Bayes, logistic regression, support vector machines (SVMs), and deep neural networks) - to perform sentiment analysis.
