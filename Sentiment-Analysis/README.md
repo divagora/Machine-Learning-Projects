@@ -1,3 +1,3 @@
 ## Sentiment Analysis ##
 
-\[Coming soon\]. This project applies three models - naive Bayes, logistic regression, and support vector machines (SVMs) - to perform sentiment analysis.
+\[Coming soon\]. This project applies several standard techniques (including naive Bayes, logistic regression, support vector machines (SVMs), and deep neural networks) - to perform sentiment analysis.
