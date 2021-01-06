@@ -1,3 +1,3 @@
-## Sentiment Analysis ##
+## Text Classifcation ##
 
-\[Coming soon\]. This project applies several standard techniques (including naive Bayes, logistic regression, support vector machines (SVMs), and deep neural networks) - to perform sentiment analysis.
+\[In progress\]. This project applies several standard techniques (including naive Bayes, logistic regression, support vector machines (SVMs), and deep neural networks) - to perform sentiment analysis.
