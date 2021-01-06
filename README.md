@@ -29,4 +29,4 @@ This repository contains a collection of various machine learning projects compl
 
 ### Natural Language Processing ###
 
-* [Text Classification](https://github.com/louissharrock/Machine-Learning-Projects/tree/main/Text-Classification). This project applies several standard techniques (including naive Bayes, logistic regression, support vector machines (SVMs), and deep neural networks) - to perform text classification.
+* [Text Classification](https://github.com/louissharrock/Machine-Learning-Projects/tree/main/Text%20Classification). This project applies several standard techniques (including naive Bayes, logistic regression, support vector machines (SVMs), and deep neural networks) - to perform text classification.
